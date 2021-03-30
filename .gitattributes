@@ -1,0 +1,11 @@
+# protobuf-tools/protoc-gen-deepcopy project gitattributes file
+#  https://github.com/github/linguist#using-gitattributes
+#  https://github.com/github/linguist/blob/master/lib/linguist/languages.yml
+
+# To prevent CRLF breakages on Windows for fragile files, like testdata.
+* -text
+
+docs        linguist-documentation
+*.pb.go     linguist-generated
+*gen.go     linguist-generated
+*_string.go linguist-generated
