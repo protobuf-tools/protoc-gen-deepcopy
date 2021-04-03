@@ -15,7 +15,7 @@ import (
 
 // version is the this binary vesion.
 // TODO(zchee): parse module version itself.
-var version = "v0.0.1"
+var version = "v0.0.2"
 
 func main() {
 	showVersion := flag.Bool("version", false, "print the version and exit")
