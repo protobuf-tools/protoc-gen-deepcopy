@@ -3,7 +3,7 @@
 
 syntax = "proto3";
 
-package testdata;
+package generated;
 
 option go_package = "github.com/protobuf-tools/protoc-gen-deepcopy/testdata/generated";
 
