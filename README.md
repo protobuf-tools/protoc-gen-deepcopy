@@ -100,3 +100,8 @@ func (in *RepeatedFieldType) DeepCopyInterface() interface{} {
 	return in.DeepCopy()
 }
 ```
+
+
+## Acknowledgement
+
+protoc-gen-deepcopy was largely inspired by [istio.io/tools/cmd/protoc-gen-deepcopy](https://github.com/istio/tools/tree/master/cmd/protoc-gen-deepcopy).
