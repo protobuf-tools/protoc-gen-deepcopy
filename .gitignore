@@ -52,3 +52,7 @@ bench.txt
 
 # coverage
 coverage.*
+
+# binaries
+/bin/protoc-gen-deepcopy
+tools/bin/
