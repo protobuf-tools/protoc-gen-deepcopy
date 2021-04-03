@@ -56,3 +56,6 @@ coverage.*
 # binaries
 /bin/protoc-gen-deepcopy
 tools/bin/
+
+# testdata
+testdata/generated/
