@@ -14,7 +14,7 @@ GO_PATH ?= $(shell go env GOPATH)
 PKG := $(subst $(GO_PATH)/src/,,$(CURDIR))
 CGO_ENABLED ?= 0
 GO_BUILDTAGS=osusergo,netgo,static
-GO_LDFLAGS=-s -w "-extldflags=-static"
+GO_LDFLAGS=-s -w -linkmode internal "-extldflags=-static-pie -fno-PIC"
 GO_FLAGS ?= -tags='$(subst $(space),$(comma),${GO_BUILDTAGS})' -ldflags='${GO_LDFLAGS}' -installsuffix=netgo
 ifneq (${VERSION},)
 	GO_LDFLAGS+=-X main.version=${VERSION}
@@ -56,12 +56,13 @@ endef
 
 ##@ build
 
+.PHONY: ${GOBIN}/$(notdir ${PKG})
 ${GOBIN}/$(notdir ${PKG}):
 	$(call target,build)
 	@mkdir -p ./bin
 	CGO_ENABLED=0 go build -v ${GO_FLAGS} -o ./bin/$(notdir ${PKG}) ${PKG}
 
-build: ${GOBIN}/$(notdir ${PKG}) ## Build binary.
+build: ${GOBIN}/$(notdir ${PKG})  ## Build binary.
 
 
 ##@ test, coverage
@@ -85,11 +86,16 @@ coverage: testdata tools/bin/gotestsum  ## Takes packages test coverage.
 		CGO_ENABLED=${CGO_ENABLED} ${GO_TEST} ${GO_TEST_FLAGS} -covermode=atomic -coverpkg=./... -coverprofile=coverage.out $(strip ${GO_FLAGS}) ${GO_PKGS}
 
 .PHONY: testdata
-testdata: build
-testdata: tools/bin/protoc-gen-go
-	@rm -rf testdata/generated
-	@mkdir -p testdata/generated
-	@PATH="${GOBIN}:${TOOLS_BIN}:${PATH}" protoc --go_out=${GO_PATH}/src --deepcopy_out=${GO_PATH}/src ./testdata/types.proto
+testdata: build tools/bin/protoc-gen-go
+testdata: testdata/types testdata/k8s.io/apimachinery/pkg/apis/meta/v1
+
+.PHONY: testdata/types
+testdata/types:
+	@PATH="${GOBIN}:${TOOLS_BIN}:${PATH}" protoc -I. -I${GO_PATH}/src --go_out=${GO_PATH}/src --deepcopy_out=${GO_PATH}/src ./testdata/types/types.proto
+
+.PHONY: testdata/k8s.io/apimachinery/pkg/apis/meta/v1
+testdata/k8s.io/apimachinery/pkg/apis/meta/v1:
+	@PATH="${GOBIN}:${TOOLS_BIN}:${PATH}" protoc -I. -I${GO_PATH}/src --go_out=${GO_PATH}/src --deepcopy_out=${GO_PATH}/src ./testdata/k8s.io/apimachinery/pkg/apis/meta/v1/meta.proto
 
 
 ##@ fmt, lint
