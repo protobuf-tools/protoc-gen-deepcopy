@@ -1,5 +1,5 @@
 module github.com/protobuf-tools/protoc-gen-deepcopy
 
-go 1.16
+go 1.17
 
-require google.golang.org/protobuf v1.26.0
+require google.golang.org/protobuf v1.27.1
