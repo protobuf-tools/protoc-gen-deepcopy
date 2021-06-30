@@ -58,4 +58,4 @@ coverage.*
 tools/bin/
 
 # testdata
-testdata/generated/
+*.pb.go

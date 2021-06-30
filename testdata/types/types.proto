@@ -3,9 +3,9 @@
 
 syntax = "proto3";
 
-package generated;
+package types;
 
-option go_package = "github.com/protobuf-tools/protoc-gen-deepcopy/testdata/generated";
+option go_package = "github.com/protobuf-tools/protoc-gen-deepcopy/testdata/types";
 
 // TagType for ensure DeepCopyInto method is created.
 message TagType {
