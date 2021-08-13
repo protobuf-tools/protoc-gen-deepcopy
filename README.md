@@ -1,6 +1,9 @@
 # protoc-gen-deepcopy
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/protobuf-tools/protoc-gen-deepcopy.svg)](https://pkg.go.dev/github.com/protobuf-tools/protoc-gen-deepcopy)
+
 protoc-gen-deepcopy is a plugin for protoc which generates `DeepCopyInto()`, `DeepCopy()` and `DeepCopyInterface()` functions for .pb.go types.
+
 
 ## Generated
 
